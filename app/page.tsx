@@ -1,8 +1,9 @@
+
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
 export default function Home() {
+
   return (
     <div className="flex min-h-screen flex-col bg-linear-[135deg] from-blue-200 to-purple-200">
       <main className="flex-1">
@@ -13,7 +14,7 @@ export default function Home() {
             <div className="flex flex-col items-center gap-4">
 
               <Link href={'sign-up'}>
-                <Button size={'lg'} className="group h-12 px-8 hover:scale-105 font-bold tracking-wider" variant={'default'}>Start for free <ArrowRight className="transition-transform duration-300 group-hover:translate-x-2" /></Button>
+                <Button size={'lg'} className="group h-12 px-8 hover:scale-105 hover:shadow-xl font-bold tracking-wider" variant={'default'}>Start for free <ArrowRight className="transition-transform duration-300 group-hover:translate-x-2" /></Button>
               </Link>
               <p className="text-sm text-gray-500">Free forever, No credit card required</p>
             </div>
@@ -21,24 +22,7 @@ export default function Home() {
         </section>
 
         {/* Hero images section with tabs */}
-        <section className="border-t bg-white py-16">
-          <div className="container mx-auto px-4">
-            <div className="mx-auto max-w-6xl">
 
-              {/* Tabs */}
-              <div className="flex gap-2">
-                <Button>Organize Applications</Button>
-                <Button>Get Hired</Button>
-                <Button>Manage Boards</Button>
-              </div>
-              <div>
-                <Image src="/hero-images/hero1.png" width={1200} height={800} alt="Organize Applications" />
-                <Image src="/hero-images/hero2.png" width={1200} height={800} alt="Get Hired Applications" />
-                <Image src="/hero-images/hero3.png" width={1200} height={800} alt="Manage boards" />
-              </div>
-            </div>
-          </div>
-        </section>
       </main>
     </div>
   );
