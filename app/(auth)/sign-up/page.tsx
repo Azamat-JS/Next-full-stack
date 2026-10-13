@@ -15,6 +15,7 @@ import { Label } from "@/components/ui/label";
 import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { signUp } from "@/lib/auth/auth-client";
 
 export default function SignUp() {
     const [name, setName] = useState("");
@@ -26,30 +27,30 @@ export default function SignUp() {
 
     const router = useRouter();
 
-    // async function handleSubmit(e: React.FormEvent) {
-    //     e.preventDefault();
+    async function handleSubmit(e: React.FormEvent) {
+        e.preventDefault();
 
-    //     setError("");
-    //     setLoading(true);
+        setError("");
+        setLoading(true);
 
-    //     try {
-    //         const result = await signUp.email({
-    //             name,
-    //             email,
-    //             password,
-    //         });
+        try {
+            const result = await signUp.email({
+                name,
+                email,
+                password,
+            });
 
-    //         if (result.error) {
-    //             setError(result.error.message ?? "Failed to sign up");
-    //         } else {
-    //             router.push("/dashboard");
-    //         }
-    //     } catch (err) {
-    //         setError("An unexpected error occurred");
-    //     } finally {
-    //         setLoading(false);
-    //     }
-    // }
+            if (result.error) {
+                setError(result.error.message ?? "Failed to sign up");
+            } else {
+                router.push("/dashboard");
+            }
+        } catch (err) {
+            setError("An unexpected error occurred");
+        } finally {
+            setLoading(false);
+        }
+    }
 
     return (
         <div className="flex min-h-[calc(100vh-4rem)] items-center justify-center bg-white p-4">
@@ -62,7 +63,7 @@ export default function SignUp() {
                         Create an account to start tracking your job applications
                     </CardDescription>
                 </CardHeader>
-                <form className="space-y-4">
+                <form onSubmit={handleSubmit} className="space-y-4">
                     <CardContent className="space-y-4">
                         {error && (
                             <div className="rounded-md bg-destructive/15 p-3 text-sm text-destructive">
