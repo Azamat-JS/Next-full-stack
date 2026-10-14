@@ -9,7 +9,6 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card";
-// import { signIn } from "@/lib/auth/auth-client";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
@@ -103,7 +102,7 @@ export default function SignIn() {
                             className="w-full bg-primary hover:bg-primary/90"
                             disabled={loading}
                         >
-                            {loading ? "Creating account..." : "Sign In"}
+                            {loading ? "Signing in..." : "Sign In"}
                         </Button>
                         <p className="text-center text-sm text-gray-600">
                             Don't have an account?{" "}
