@@ -1,27 +1,16 @@
+'use client'
+
 import { Suspense } from 'react'
-import { ArrowRight, Briefcase } from 'lucide-react'
+import { Briefcase } from 'lucide-react'
 import Link from 'next/link'
 import { Button } from './ui/button'
-import { getSession } from '@/lib/auth/auth'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuLabel, DropdownMenuTrigger } from './ui/dropdown-menu'
 import { Avatar, AvatarFallback } from './ui/avatar'
 import SignOutBtn from './sign-out-btn'
+import { useSession } from '@/lib/auth/auth-client'
 
-const NavAuth = async () => {
-    const session = await getSession();
-
-    if (!session?.user) {
-        return (
-            <>
-                <Link href={'/sign-in'} className='text-gray-700 hover:text-black'>
-                    <Button variant="ghost" className="text-gray-700 hover:text-black">Log In</Button>
-                </Link>
-                <Link href={'/sign-up'}>
-                    <Button size={'sm'} className="group h-12 px-8 hover:scale-105 font-bold tracking-wider" variant={'default'}>Start for free <ArrowRight className="transition-transform duration-300 group-hover:translate-x-2" /></Button>
-                </Link>
-            </>
-        )
-    }
+const NavAuth = () => {
+    const { data: session } = useSession()
 
     return (
         <>
@@ -34,18 +23,18 @@ const NavAuth = async () => {
             </Link>
             <DropdownMenu>
                 <DropdownMenuTrigger render={<Button variant="ghost" />}>
-                    <Avatar>
+                    <Avatar className="h-8 w-8">
                         <AvatarFallback className="bg-primary text-white">
-                            {session.user.name[0].toUpperCase()}
+                            {session?.user.name[0].toUpperCase()}
                         </AvatarFallback>
                     </Avatar>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent>
+                <DropdownMenuContent className="w-56" align='end'>
                     <DropdownMenuGroup>
-                        <DropdownMenuLabel>
-                            <div>
-                                <p>{session.user.name}</p>
-                                <p>{session.user.email}</p>
+                        <DropdownMenuLabel className="font-normal">
+                            <div className='flex flex-col space-y-1'>
+                                <p className='text-sm font-medium leading-none'>{session?.user.name}</p>
+                                <p className='text-xs leading-none text-muted-foreground'>{session?.user.email}</p>
                             </div>
                         </DropdownMenuLabel>
                     </DropdownMenuGroup>
