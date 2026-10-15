@@ -2,9 +2,10 @@ import { Suspense } from 'react'
 import { ArrowRight, Briefcase } from 'lucide-react'
 import Link from 'next/link'
 import { Button } from './ui/button'
-import { getSession, signOut } from '@/lib/auth/auth'
-import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from './ui/dropdown-menu'
+import { getSession } from '@/lib/auth/auth'
+import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuLabel, DropdownMenuTrigger } from './ui/dropdown-menu'
 import { Avatar, AvatarFallback } from './ui/avatar'
+import SignOutBtn from './sign-out-btn'
 
 const NavAuth = async () => {
     const session = await getSession();
@@ -48,9 +49,7 @@ const NavAuth = async () => {
                             </div>
                         </DropdownMenuLabel>
                     </DropdownMenuGroup>
-                    <DropdownMenuItem onClick={async () => signOut()}>
-                        Log Out
-                    </DropdownMenuItem>
+                    <SignOutBtn />
                 </DropdownMenuContent>
             </DropdownMenu>
         </>
