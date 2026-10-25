@@ -136,7 +136,6 @@ export async function PATCH(
     }
 }
 
-// DELETE /api/products/:id
 export async function DELETE(
     _request: Request,
     context: Context
