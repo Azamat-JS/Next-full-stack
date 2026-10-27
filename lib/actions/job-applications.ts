@@ -1,6 +1,6 @@
 "use server";
 
-import { Board } from "@/app/models";
+import { Board, Column, JobApplication } from "@/app/models";
 import { getSession } from "../auth/auth";
 import connectDB from "../db";
 
@@ -43,7 +43,6 @@ export async function createJobApplication(data: JobApplicationData) {
         return { error: "Missing required fields" };
     }
 
-    // Verify board ownership
     const board = await Board.findOne({
         _id: boardId,
         userId: session.user.id,
@@ -53,4 +52,27 @@ export async function createJobApplication(data: JobApplicationData) {
     if (!board) {
         return { error: "Board not found" }
     }
+
+    const maxOrder = (await JobApplication.findOne({ columnId }).sort({ order: -1 }).select("order").lean()) as { order: number } || null;
+
+    const jobApplication = await JobApplication.create({
+        company,
+        position,
+        location,
+        notes,
+        salary,
+        jobUrl,
+        columnId,
+        boardId,
+        tags: tags || [],
+        description,
+        status: 'applied',
+        order: maxOrder ? maxOrder.order + 1 : 0,
+    });
+
+    await Column.findByIdAndUpdate(columnId, {
+        $push: { jobApplication: jobApplication._id }
+    });
+
+    return { data: jobApplication }
 }
