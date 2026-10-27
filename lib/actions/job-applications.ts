@@ -63,6 +63,7 @@ export async function createJobApplication(data: JobApplicationData) {
         salary,
         jobUrl,
         columnId,
+        userId: session.user.id,
         boardId,
         tags: tags || [],
         description,
@@ -74,5 +75,5 @@ export async function createJobApplication(data: JobApplicationData) {
         $push: { jobApplication: jobApplication._id }
     });
 
-    return { data: jobApplication }
+    return { data: JSON.parse(JSON.stringify(jobApplication)) }
 }
