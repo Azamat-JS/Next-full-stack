@@ -54,11 +54,10 @@ function DroppableColumn({ column, config, boardId, sortedColumns }: { column: C
                         </CardTitle>
                     </div>
                     <DropdownMenu>
-                        <DropdownMenuTrigger>
-                            <Button className="h-6 w-6 text-white hover:bg-white/20" variant="ghost">
-                                <MoreVertical className="h-4 w-4" />
-                            </Button>
+                        <DropdownMenuTrigger render={<Button className="h-6 w-6 text-white hover:bg-white/20" variant="ghost" />}>
+                            <MoreVertical className="h-4 w-4" />
                         </DropdownMenuTrigger>
+
                         <DropdownMenuContent>
                             <DropdownMenuItem className="text-destructive">
                                 <Trash2 className="mr-2 h-4 w-4" /> Delete Column

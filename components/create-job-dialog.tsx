@@ -50,12 +50,11 @@ const CreateJobApplicationDialog = ({ columnId, boardId }: CreateJobApplicationD
 
     return (
         <Dialog open={open} onOpenChange={setOpen}>
-            <DialogTrigger>
-                <Button variant="outline">
-                    <Plus />
-                    Add Job
-                </Button>
+            <DialogTrigger render={<Button variant="outline" />}>
+                <Plus />
+                Add Job
             </DialogTrigger>
+
 
             <DialogContent>
                 <DialogHeader>

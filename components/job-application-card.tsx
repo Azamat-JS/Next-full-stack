@@ -36,11 +36,10 @@ const JobApplicationCard = ({ job, columns }: JobApplicationCardProps) => {
 
                         <div className="flex items-start gap-1">
                             <DropdownMenu>
-                                <DropdownMenuTrigger>
-                                    <Button className="w-6 h-6" variant="ghost" size="icon">
-                                        <MoreVertical className="w-4 h-4" />
-                                    </Button>
+                                <DropdownMenuTrigger render={<Button className="w-6 h-6" variant="ghost" size="icon" />}>
+                                    <MoreVertical className="w-4 h-4" />
                                 </DropdownMenuTrigger>
+
                                 <DropdownMenuContent align="end">
                                     <DropdownMenuItem>
                                         <Edit2 className="mr-2 h-4 w-4" />
