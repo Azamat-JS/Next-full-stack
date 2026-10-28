@@ -81,7 +81,7 @@ function DroppableColumn({ column, config, boardId, sortedColumns }: { column: C
 function SortableJobCard({ job, columns }: { job: JobApplication, columns: Column[] }) {
     return (
         <div>
-            <JobApplicationCard />
+            <JobApplicationCard job={job} columns={columns} />
         </div>
     )
 }
