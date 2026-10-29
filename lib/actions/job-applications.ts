@@ -159,5 +159,45 @@ export async function updateJobApplication(id: string, updates: {
                 newOrderValue = 0;
             }
         }
+
+        updatesToApply.columnId = newColumnId;
+        updatesToApply.order = newOrderValue;
+
+        await Column.findByIdAndUpdate(newColumnId, {
+            $push: { jobApplication: id }
+        });
+    } else if (order !== undefined && order !== null) {
+        const otherJobsInColumn = await JobApplication.find({ columnId: newColumnId, _id: { $ne: id } }).sort({ order: 1 }).lean();
+
+        const currentJobOrder = jobApplication.order || 0;
+        const currentPositionIndex = otherJobsInColumn.findIndex((job) => job.order > currentJobOrder);
+        const oldPositionIndex = currentPositionIndex === -1 ? otherJobsInColumn.length : currentPositionIndex;
+
+        const newOrderValue = order * 100;
+
+        if (order < oldPositionIndex) {
+            const jobsToShiftDown = otherJobsInColumn.slice(order, oldPositionIndex);
+
+            for (const job of jobsToShiftDown) {
+                await JobApplication.findOneAndUpdate(job._id, {
+                    $set: { order: job.order + 100 }
+                })
+            }
+        } else if (order > oldPositionIndex) {
+            const jobsToShiftUp = otherJobsInColumn.slice(oldPositionIndex, order);
+            for (const job of jobsToShiftUp) {
+                const newOrder = Math.max(0, job.order - 100);
+                await JobApplication.findOneAndUpdate(job._id, {
+                    $set: { order: newOrder }
+                });
+            }
+        }
+
+        updatesToApply.order = newOrderValue;
     }
+    const updated = await JobApplication.findByIdAndUpdate(id, updatesToApply, {
+        new: true,
+    });
+
+    return { data: JSON.parse(JSON.stringify(updated)) }
 }
