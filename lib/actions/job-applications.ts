@@ -164,7 +164,7 @@ export async function updateJobApplication(id: string, updates: {
         updatesToApply.order = newOrderValue;
 
         await Column.findByIdAndUpdate(newColumnId, {
-            $push: { jobApplication: id }
+            $push: { jobApplications: id }
         });
     } else if (order !== undefined && order !== null) {
         const otherJobsInColumn = await JobApplication.find({ columnId: newColumnId, _id: { $ne: id } }).sort({ order: 1 }).lean();
@@ -198,6 +198,6 @@ export async function updateJobApplication(id: string, updates: {
     const updated = await JobApplication.findByIdAndUpdate(id, updatesToApply, {
         new: true,
     });
-
+    revalidatePath("/dashboard")
     return { data: JSON.parse(JSON.stringify(updated)) }
 }
